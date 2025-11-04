@@ -1,0 +1,824 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RBS - Sistema de Pago Móvil</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        
+        h1 {
+            text-align: center;
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 28px;
+        }
+        
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 16px;
+        }
+        
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+        
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+        }
+        
+        .btn-secondary {
+            background: #f0f0f0;
+            color: #333;
+        }
+        
+        .btn-secondary:hover {
+            background: #e0e0e0;
+        }
+        
+        .rbs-tree {
+            margin-top: 20px;
+        }
+        
+        .entregable {
+            margin-bottom: 25px;
+            border: 2px solid #667eea;
+            border-radius: 10px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .entregable:hover {
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+        }
+        
+        .entregable-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px 20px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .entregable-header:hover {
+            background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+        }
+        
+        .entregable-header .toggle {
+            font-size: 20px;
+            transition: transform 0.3s ease;
+        }
+        
+        .entregable.collapsed .toggle {
+            transform: rotate(-90deg);
+        }
+        
+        .entregable-content {
+            max-height: 2000px;
+            overflow: hidden;
+            transition: max-height 0.5s ease, padding 0.5s ease;
+        }
+        
+        .entregable.collapsed .entregable-content {
+            max-height: 0;
+            padding: 0;
+        }
+        
+        .recursos-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 20px;
+            padding: 20px;
+        }
+        
+        .recurso-categoria {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 15px;
+            border-left: 4px solid #667eea;
+        }
+        
+        .recurso-categoria.humanos {
+            border-left-color: #4CAF50;
+        }
+        
+        .recurso-categoria.equipamiento {
+            border-left-color: #FF9800;
+        }
+        
+        .recurso-categoria.software {
+            border-left-color: #2196F3;
+        }
+        
+        .recurso-titulo {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 16px;
+        }
+        
+        .recurso-icon {
+            font-size: 20px;
+        }
+        
+        .recurso-lista {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .recurso-lista li {
+            padding: 8px 0;
+            color: #555;
+            font-size: 14px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .recurso-lista li:last-child {
+            border-bottom: none;
+        }
+        
+        .recurso-lista li:before {
+            content: "▸ ";
+            color: #667eea;
+            font-weight: bold;
+            margin-right: 8px;
+        }
+        
+        .stats {
+            display: flex;
+            justify-content: space-around;
+            margin: 30px 0;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .stat-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            flex: 1;
+            min-width: 200px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+        
+        .stat-number {
+            font-size: 36px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .stat-label {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+        
+        @media (max-width: 768px) {
+            .recursos-container {
+                grid-template-columns: 1fr;
+            }
+            
+            h1 {
+                font-size: 22px;
+            }
+            
+            .stat-card {
+                min-width: 150px;
+            }
+        }
+        
+        .search-box {
+            width: 100%;
+            max-width: 500px;
+            padding: 12px 20px;
+            border: 2px solid #667eea;
+            border-radius: 25px;
+            font-size: 14px;
+            margin: 20px auto;
+            display: block;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+        
+        .search-box:focus {
+            box-shadow: 0 0 15px rgba(102, 126, 234, 0.3);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📊 Estructura de Desglose de Recursos (RBS)</h1>
+        <p class="subtitle">Sistema de Pago Móvil para Máquinas Expendedoras del Campus Universitario</p>
+        
+        <div class="stats">
+            <div class="stat-card">
+                <div class="stat-number">17</div>
+                <div class="stat-label">Entregables</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">3</div>
+                <div class="stat-label">Categorías de Recursos</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">100+</div>
+                <div class="stat-label">Recursos Identificados</div>
+            </div>
+        </div>
+        
+        <div class="controls">
+            <button class="btn btn-primary" onclick="expandAll()">📂 Expandir Todos</button>
+            <button class="btn btn-secondary" onclick="collapseAll()">📁 Colapsar Todos</button>
+        </div>
+        
+        <input type="text" class="search-box" placeholder="🔍 Buscar recursos..." onkeyup="searchResources(this.value)">
+        
+        <div class="rbs-tree" id="rbsTree"></div>
+    </div>
+
+    <script>
+        const rbsData = [
+            {
+                id: 1,
+                nombre: "1.1 Acta de Constitución y Matriz de Interesados",
+                recursos: {
+                    humanos: [
+                        "Director de Proyecto (40 horas)",
+                        "Analista de Negocios (24 horas)",
+                        "Especialista en Stakeholders (16 horas)"
+                    ],
+                    equipamiento: [
+                        "Equipos de cómputo (3 laptops)",
+                        "Material de oficina y papelería",
+                        "Salas de reuniones virtuales"
+                    ],
+                    software: [
+                        "Microsoft Office 365",
+                        "Software de gestión de proyectos",
+                        "Herramientas de videoconferencia"
+                    ]
+                }
+            },
+            {
+                id: 2,
+                nombre: "1.2 Plan de Gestión del Proyecto",
+                recursos: {
+                    humanos: [
+                        "Director de Proyecto (60 horas)",
+                        "Planificador de Proyectos (40 horas)",
+                        "Especialista en Riesgos (32 horas)",
+                        "Especialista en Comunicaciones (24 horas)"
+                    ],
+                    equipamiento: [
+                        "Equipos de cómputo (4 laptops)",
+                        "Material para diagramación",
+                        "Servidor para documentos"
+                    ],
+                    software: [
+                        "Microsoft Project o Primavera P6",
+                        "Software de gestión de riesgos",
+                        "SharePoint, Confluence",
+                        "Templates PMI"
+                    ]
+                }
+            },
+            {
+                id: 3,
+                nombre: "2.1 Arquitectura de Hardware del Dispensador",
+                recursos: {
+                    humanos: [
+                        "Ingeniero de Hardware Senior (80 horas)",
+                        "Ingeniero Electrónico (60 horas)",
+                        "Técnico en Diseño de PCB (40 horas)"
+                    ],
+                    equipamiento: [
+                        "Microcontroladores ESP32 (20 unidades)",
+                        "Lectores NFC/RFID (15 unidades)",
+                        "Módulos WiFi/4G (15 unidades)",
+                        "Fuentes de alimentación (15 unidades)",
+                        "Componentes electrónicos varios",
+                        "Equipos de medición (multímetros, osciloscopios)"
+                    ],
+                    software: [
+                        "Altium Designer o KiCad",
+                        "Proteus, LTSpice",
+                        "Herramientas de programación"
+                    ]
+                }
+            },
+            {
+                id: 4,
+                nombre: "2.2 Arquitectura de Software Embebido",
+                recursos: {
+                    humanos: [
+                        "Arquitecto de Software Senior (100 horas)",
+                        "Ingeniero Backend (60 horas)",
+                        "Ingeniero Frontend (60 horas)",
+                        "Especialista en Bases de Datos (40 horas)"
+                    ],
+                    equipamiento: [
+                        "Estaciones de desarrollo (4 unidades)",
+                        "Servidores de desarrollo y pruebas",
+                        "Dispositivos móviles Android e iOS (6 unidades)"
+                    ],
+                    software: [
+                        "Enterprise Architect, Lucidchart",
+                        "Visual Studio, IntelliJ IDEA",
+                        "Android Studio",
+                        "Swagger, Confluence"
+                    ]
+                }
+            },
+            {
+                id: 5,
+                nombre: "2.3 Prototipo de Pantalla Táctil del Dispensador",
+                recursos: {
+                    humanos: [
+                        "Diseñador UX/UI Senior (80 horas)",
+                        "Desarrollador Frontend Mobile (100 horas)",
+                        "Diseñador Gráfico (60 horas)",
+                        "Especialista en Usabilidad (40 horas)"
+                    ],
+                    equipamiento: [
+                        "Pantallas táctiles para prototipado (5 unidades)",
+                        "Tablets y smartphones (8 dispositivos)",
+                        "Materiales para mockups físicos",
+                        "Equipos de grabación de video"
+                    ],
+                    software: [
+                        "Adobe Creative Suite",
+                        "Figma o Sketch",
+                        "InVision o Marvel",
+                        "Software de grabación de sesiones"
+                    ]
+                }
+            },
+            {
+                id: 6,
+                nombre: "2.4 Modelo Lógico de Base de Datos",
+                recursos: {
+                    humanos: [
+                        "Arquitecto de Bases de Datos (80 horas)",
+                        "Administrador DBA (60 horas)",
+                        "Analista de Datos (40 horas)"
+                    ],
+                    equipamiento: [
+                        "Servidores de base de datos",
+                        "Sistemas de almacenamiento SSD",
+                        "Equipos de respaldo"
+                    ],
+                    software: [
+                        "PostgreSQL, MySQL o SQL Server",
+                        "ERwin, MySQL Workbench",
+                        "Software de administración BD",
+                        "Herramientas de migración"
+                    ]
+                }
+            },
+            {
+                id: 7,
+                nombre: "2.5 Especificaciones de Conexión QR/NFC",
+                recursos: {
+                    humanos: [
+                        "Ingeniero de Telecomunicaciones (70 horas)",
+                        "Especialista en Protocolos (60 horas)",
+                        "Ingeniero de Seguridad de Redes (50 horas)"
+                    ],
+                    equipamiento: [
+                        "Módulos NFC (10 unidades)",
+                        "Lectores QR industriales (10 unidades)",
+                        "Equipos de análisis de protocolos",
+                        "Tarjetas NFC y tags (100 unidades)"
+                    ],
+                    software: [
+                        "Wireshark",
+                        "SDKs de NFC para Android e iOS",
+                        "Librerías de QR",
+                        "Certificados SSL/TLS"
+                    ]
+                }
+            },
+            {
+                id: 8,
+                nombre: "3.1 Desarrollo de Firmware para Control de Transacciones",
+                recursos: {
+                    humanos: [
+                        "Ingeniero de Firmware Senior (200 horas)",
+                        "Ingeniero de Firmware Junior (150 horas)",
+                        "Ingeniero de Testing Embebido (100 horas)"
+                    ],
+                    equipamiento: [
+                        "Kits de desarrollo (10 unidades)",
+                        "Programadores JTAG, SWD (5 unidades)",
+                        "Placas de desarrollo (15 unidades)",
+                        "Componentes para prototipos"
+                    ],
+                    software: [
+                        "IDEs Keil, IAR, Eclipse",
+                        "Compiladores y toolchains",
+                        "Software de depuración",
+                        "FreeRTOS"
+                    ]
+                }
+            },
+            {
+                id: 9,
+                nombre: "3.2 Implementación de Interfaz de Usuario en Pantalla",
+                recursos: {
+                    humanos: [
+                        "Desarrollador Frontend Senior (150 horas)",
+                        "Desarrollador Android (120 horas)",
+                        "Desarrollador iOS (120 horas)",
+                        "QA Tester Mobile (80 horas)"
+                    ],
+                    equipamiento: [
+                        "Dispositivos Android (8 unidades)",
+                        "Dispositivos iOS (6 unidades)",
+                        "Ordenadores Mac (2 unidades)",
+                        "Equipos Windows/Linux (3 unidades)"
+                    ],
+                    software: [
+                        "Android Studio",
+                        "Xcode y Apple Developer Account",
+                        "React Native o Flutter",
+                        "Material Design",
+                        "Jenkins, GitLab CI"
+                    ]
+                }
+            },
+            {
+                id: 10,
+                nombre: "3.3 Integración del Módulo de Pago QR/NFC",
+                recursos: {
+                    humanos: [
+                        "Ingeniero de Integración de Pagos (120 horas)",
+                        "Especialista en Seguridad de Pagos (100 horas)",
+                        "Desarrollador Backend (80 horas)",
+                        "QA Security Tester (60 horas)"
+                    ],
+                    equipamiento: [
+                        "Terminales de pago (5 unidades)",
+                        "Dispositivos NFC certificados (8 unidades)",
+                        "Lector de tarjetas de prueba",
+                        "Hardware Security Modules"
+                    ],
+                    software: [
+                        "SDKs Stripe, PayPal",
+                        "Certificados PCI-DSS",
+                        "Herramientas de encriptación",
+                        "Software de penetration testing",
+                        "APIs de pasarelas de pago"
+                    ]
+                }
+            },
+            {
+                id: 11,
+                nombre: "3.4 Desarrollo del Servidor Central de Transacciones",
+                recursos: {
+                    humanos: [
+                        "Arquitecto de Soluciones Cloud (100 horas)",
+                        "Ingeniero Backend Senior (200 horas)",
+                        "Ingeniero Backend Junior (150 horas)",
+                        "DevOps Engineer (120 horas)",
+                        "Administrador de Sistemas (80 horas)"
+                    ],
+                    equipamiento: [
+                        "Servidores físicos o virtuales",
+                        "Sistemas de balanceo de carga",
+                        "Equipos de firewall",
+                        "Sistemas de respaldo"
+                    ],
+                    software: [
+                        "AWS, Azure, Google Cloud",
+                        "Node.js, Java Spring, .NET",
+                        "Docker, Kubernetes",
+                        "Prometheus, Grafana, New Relic",
+                        "Certificados SSL/TLS"
+                    ]
+                }
+            },
+            {
+                id: 12,
+                nombre: "3.5 Integración con Sistema de Dispensado",
+                recursos: {
+                    humanos: [
+                        "Ingeniero de Integración (150 horas)",
+                        "Técnico Electromecánico (120 horas)",
+                        "Ingeniero de Testing (100 horas)",
+                        "Técnico de Mantenimiento (60 horas)"
+                    ],
+                    equipamiento: [
+                        "Máquinas expendedoras (3 unidades)",
+                        "Interfaces MDB (15 unidades)",
+                        "Actuadores y sistemas de dispensado",
+                        "Sensores de producto (20 unidades)",
+                        "Herramientas especializadas",
+                        "Piezas de repuesto"
+                    ],
+                    software: [
+                        "Protocolos MDB y DEX",
+                        "Software de diagnóstico",
+                        "Drivers y firmware de controladores",
+                        "Software de telemetría"
+                    ]
+                }
+            },
+            {
+                id: 13,
+                nombre: "4.1 Informe de Pruebas Unitarias",
+                recursos: {
+                    humanos: [
+                        "QA Engineer Senior (100 horas)",
+                        "Desarrollador de Automatización (120 horas)",
+                        "QA Tester (80 horas)"
+                    ],
+                    equipamiento: [
+                        "Entornos de pruebas dedicados",
+                        "Dispositivos móviles (10 unidades)",
+                        "Servidores de CI"
+                    ],
+                    software: [
+                        "JUnit, NUnit, Jest, Mocha",
+                        "Selenium, Appium",
+                        "Jenkins, CircleCI, Travis CI",
+                        "TestRail, Zephyr",
+                        "Software de cobertura de código"
+                    ]
+                }
+            },
+            {
+                id: 14,
+                nombre: "4.2 Elaboración del Plan de Despliegue y Contingencia",
+                recursos: {
+                    humanos: [
+                        "Gerente de Despliegue (80 horas)",
+                        "Ingeniero de Operaciones (60 horas)",
+                        "Especialista en Continuidad (50 horas)",
+                        "Coordinador de Logística (40 horas)"
+                    ],
+                    equipamiento: [
+                        "Equipos de comunicación",
+                        "Herramientas de instalación",
+                        "Vehículos para transporte",
+                        "Material de documentación"
+                    ],
+                    software: [
+                        "Software de gestión de despliegue",
+                        "Herramientas de monitoreo",
+                        "Sistemas de ticketing",
+                        "Software de comunicación de crisis"
+                    ]
+                }
+            },
+            {
+                id: 15,
+                nombre: "4.3 Instalación del Sistema en Todas las Máquinas",
+                recursos: {
+                    humanos: [
+                        "Jefe de Instalación (120 horas)",
+                        "Técnicos de Campo (400 horas - equipo de 4)",
+                        "Ingeniero de Certificación (80 horas)",
+                        "Supervisor de Calidad (60 horas)"
+                    ],
+                    equipamiento: [
+                        "Herramientas de instalación especializadas",
+                        "Equipos de prueba y calibración",
+                        "Material de señalización",
+                        "Equipos de protección personal",
+                        "Materiales de instalación (tornillería, cables)"
+                    ],
+                    software: [
+                        "Software de validación",
+                        "Checklists digitales",
+                        "Apps móviles para reporte",
+                        "Software de certificados"
+                    ]
+                }
+            },
+            {
+                id: 16,
+                nombre: "5.1 Aprobación Final de Entregables y Cierre de Contratos",
+                recursos: {
+                    humanos: [
+                        "Director de Proyecto (60 horas)",
+                        "PMO (40 horas)",
+                        "Equipo de Documentación (50 horas)",
+                        "Abogado/Especialista en Contratos (30 horas)"
+                    ],
+                    equipamiento: [
+                        "Salas para reuniones de cierre",
+                        "Material para presentaciones",
+                        "Sistemas de archivo"
+                    ],
+                    software: [
+                        "Software de gestión documental",
+                        "PowerPoint, Prezi",
+                        "Sistemas de firma electrónica",
+                        "Repositorios de documentación"
+                    ]
+                }
+            },
+            {
+                id: 17,
+                nombre: "5.2 Elaboración de Manuales y Cierre Formal del Proyecto",
+                recursos: {
+                    humanos: [
+                        "Redactor Técnico Senior (100 horas)",
+                        "Diseñador de Documentación (60 horas)",
+                        "Traductor (40 horas)",
+                        "Revisor de Calidad (40 horas)"
+                    ],
+                    equipamiento: [
+                        "Equipos de edición y diseño",
+                        "Sistemas de impresión profesional",
+                        "Material para encuadernación",
+                        "Medios de almacenamiento (USB, DVDs)"
+                    ],
+                    software: [
+                        "Adobe InDesign o Publisher",
+                        "Snagit, Camtasia",
+                        "Herramientas de diagramación",
+                        "Sistemas de versiones",
+                        "Plataformas de e-learning"
+                    ]
+                }
+            }
+        ];
+
+        function renderRBS() {
+            const container = document.getElementById('rbsTree');
+            container.innerHTML = '';
+            
+            rbsData.forEach(entregable => {
+                const entregableDiv = document.createElement('div');
+                entregableDiv.className = 'entregable';
+                entregableDiv.setAttribute('data-id', entregable.id);
+                
+                const header = document.createElement('div');
+                header.className = 'entregable-header';
+                header.onclick = () => toggleEntregable(entregable.id);
+                header.innerHTML = `
+                    <span>${entregable.nombre}</span>
+                    <span class="toggle">▼</span>
+                `;
+                
+                const content = document.createElement('div');
+                content.className = 'entregable-content';
+                
+                const recursosContainer = document.createElement('div');
+                recursosContainer.className = 'recursos-container';
+                
+                // Recursos Humanos
+                const humanosDiv = document.createElement('div');
+                humanosDiv.className = 'recurso-categoria humanos';
+                humanosDiv.innerHTML = `
+                    <div class="recurso-titulo">
+                        <span class="recurso-icon">👥</span>
+                        Recursos Humanos
+                    </div>
+                    <ul class="recurso-lista">
+                        ${entregable.recursos.humanos.map(r => `<li>${r}</li>`).join('')}
+                    </ul>
+                `;
+                
+                // Equipamiento y Materiales
+                const equipamientoDiv = document.createElement('div');
+                equipamientoDiv.className = 'recurso-categoria equipamiento';
+                equipamientoDiv.innerHTML = `
+                    <div class="recurso-titulo">
+                        <span class="recurso-icon">🔧</span>
+                        Equipamiento y Materiales
+                    </div>
+                    <ul class="recurso-lista">
+                        ${entregable.recursos.equipamiento.map(r => `<li>${r}</li>`).join('')}
+                    </ul>
+                `;
+                
+                // Software y Licencias
+                const softwareDiv = document.createElement('div');
+                softwareDiv.className = 'recurso-categoria software';
+                softwareDiv.innerHTML = `
+                    <div class="recurso-titulo">
+                        <span class="recurso-icon">💻</span>
+                        Software y Licencias
+                    </div>
+                    <ul class="recurso-lista">
+                        ${entregable.recursos.software.map(r => `<li>${r}</li>`).join('')}
+                    </ul>
+                `;
+                
+                recursosContainer.appendChild(humanosDiv);
+                recursosContainer.appendChild(equipamientoDiv);
+                recursosContainer.appendChild(softwareDiv);
+                
+                content.appendChild(recursosContainer);
+                
+                entregableDiv.appendChild(header);
+                entregableDiv.appendChild(content);
+                
+                container.appendChild(entregableDiv);
+            });
+        }
+
+        function toggleEntregable(id) {
+            const entregable = document.querySelector(`.entregable[data-id="${id}"]`);
+            entregable.classList.toggle('collapsed');
+        }
+
+        function expandAll() {
+            document.querySelectorAll('.entregable').forEach(el => {
+                el.classList.remove('collapsed');
+            });
+        }
+
+        function collapseAll() {
+            document.querySelectorAll('.entregable').forEach(el => {
+                el.classList.add('collapsed');
+            });
+        }
+
+        function searchResources(query) {
+            query = query.toLowerCase().trim();
+            
+            document.querySelectorAll('.entregable').forEach(entregable => {
+                const nombre = entregable.querySelector('.entregable-header').textContent.toLowerCase();
+                const recursos = entregable.querySelectorAll('.recurso-lista li');
+                
+                let hasMatch = nombre.includes(query);
+                
+                recursos.forEach(recurso => {
+                    const text = recurso.textContent.toLowerCase();
+                    if (text.includes(query)) {
+                        hasMatch = true;
+                        recurso.style.backgroundColor = query ? '#fff3cd' : '';
+                    } else {
+                        recurso.style.backgroundColor = '';
+                    }
+                });
+                
+                if (query === '') {
+                    entregable.style.display = 'block';
+                } else {
+                    entregable.style.display = hasMatch ? 'block' : 'none';
+                    if (hasMatch) {
+                        entregable.classList.remove('collapsed');
+                    }
+                }
+            });
+        }
+
+        // Inicializar
+        renderRBS();
+    </script>
+</body>
+</html>
