@@ -1,0 +1,54 @@
+%%{init: {'theme':'base', 'themeVariables': { 'primaryColor':'#e3f2fd','primaryTextColor':'#01579b','primaryBorderColor':'#0277bd','lineColor':'#0288d1','secondaryColor':'#fff3e0','tertiaryColor':'#f3e5f5','noteBkgColor':'#fff9c4','noteTextColor':'#f57f17'}}}%%
+
+flowchart TD
+    Start([Inicio del Proceso]) --> E1
+    
+    E1[<b>ETAPA 1: ELABORACIÓN</b><br/>Desarrollo del Documento Técnico<br/>📝 Borrador + Diagramas ER]
+    style E1 fill:#e3f2fd,stroke:#0277bd,stroke-width:3px
+    
+    E1 -->|Jefe de Equipo/<br/>VP Responsable| E2
+    
+    E2[<b>ETAPA 2: REVISIÓN TÉCNICA</b><br/>Verificación Funcional y de Seguridad<br/>🔍 Análisis de Protocolos y Cifrado]
+    style E2 fill:#e1f5dc,stroke:#558b2f,stroke-width:3px
+    
+    E2 -->|Dpto. TI +<br/>Supervisor Seguridad| D1{¿Observaciones<br/>Técnicas?}
+    style D1 fill:#fff3e0,stroke:#f57c00,stroke-width:2px
+    
+    D1 -->|Sí - Requiere<br/>Correcciones| E1
+    D1 -->|No - Aprobado| E3
+    
+    E3[<b>ETAPA 3: VALIDACIÓN DE CALIDAD</b><br/>Verificación de Criterios de Aceptación<br/>✓ Cumplimiento de Matriz de Calidad]
+    style E3 fill:#f3e5f5,stroke:#7b1fa2,stroke-width:3px
+    
+    E3 -->|VP Tecnología/<br/>VP Marketing| D2{¿Cumple<br/>Estándares?}
+    style D2 fill:#fff3e0,stroke:#f57c00,stroke-width:2px
+    
+    D2 -->|No - No<br/>Conformidades| E1
+    D2 -->|Sí - Validado| E4
+    
+    E4[<b>ETAPA 4: APROBACIÓN EJECUTIVA</b><br/>Revisión Estratégica y Alineación<br/>✅ Firma de Línea Base Técnica]
+    style E4 fill:#e8f5e9,stroke:#2e7d32,stroke-width:3px
+    
+    E4 -->|Directora del<br/>Proyecto| D3{¿Aprobación<br/>Final?}
+    style D3 fill:#fff3e0,stroke:#f57c00,stroke-width:2px
+    
+    D3 -->|Rechazado| E1
+    D3 -->|Aprobado| E5
+    
+    E5[<b>ETAPA 5: DISTRIBUCIÓN Y ARCHIVO</b><br/>Comunicación y Gestión de Conocimientos<br/>📂 Documento Oficial Archivado]
+    style E5 fill:#fce4ec,stroke:#c2185b,stroke-width:3px
+    
+    E5 -->|Asistente<br/>Administrativo| End([Documento en<br/>Línea Base])
+    
+    style Start fill:#ffeb3b,stroke:#f57f17,stroke-width:3px
+    style End fill:#4caf50,stroke:#1b5e20,stroke-width:3px
+    
+    %% Notas laterales
+    Note1[📋 RESPONSABLES CLAVE:<br/>• Jefe Integración: Luis Alberto Tecsi<br/>• VP Tecnología: Steve Yunior Huaman<br/>• Directora: Salome Celeste Ccahua]
+    style Note1 fill:#fff9c4,stroke:#f57f17,stroke-width:2px
+    
+    Note2[⚠️ CONTROLES CRÍTICOS:<br/>• Seguridad y Cifrado<br/>• Integración con Red Universitaria<br/>• Protocolos de Pago Yape/Plin]
+    style Note2 fill:#ffccbc,stroke:#d84315,stroke-width:2px
+    
+    E2 -.- Note2
+    E4 -.- Note1
