@@ -1,0 +1,120 @@
+<svg viewBox="0 0 900 600" xmlns="http://www.w3.org/2000/svg">
+  <!-- Título -->
+  <text x="450" y="35" font-size="24" font-weight="bold" text-anchor="middle" fill="#1a1a1a">
+    Apetito al Riesgo del Interesado
+  </text>
+  
+  <!-- Leyenda de niveles -->
+  <g transform="translate(650, 60)">
+    <rect x="0" y="0" width="25" height="25" fill="#dc2626" rx="3"/>
+    <text x="35" y="18" font-size="14" fill="#1a1a1a">BAJO (No Tolerado)</text>
+    
+    <rect x="0" y="35" width="25" height="25" fill="#f59e0b" rx="3"/>
+    <text x="35" y="53" font-size="14" fill="#1a1a1a">MEDIO (Tolerado con límites)</text>
+  </g>
+  
+  <!-- Tarjeta 1: Seguridad y Datos -->
+  <g transform="translate(50, 120)">
+    <rect x="0" y="0" width="380" height="180" fill="#fff" stroke="#dc2626" stroke-width="4" rx="8"/>
+    <rect x="0" y="0" width="380" height="50" fill="#dc2626" rx="8"/>
+    <rect x="0" y="50" width="380" height="8" fill="#dc2626"/>
+    
+    <text x="190" y="33" font-size="18" font-weight="bold" text-anchor="middle" fill="#fff">
+      SEGURIDAD Y DATOS
+    </text>
+    
+    <text x="20" y="85" font-size="16" font-weight="bold" fill="#dc2626">
+      Apetito: BAJO
+    </text>
+    
+    <text x="20" y="115" font-size="14" fill="#333">
+      • No se toleran fallos que expongan
+    </text>
+    <text x="20" y="138" font-size="14" fill="#333">
+      datos financieros
+    </text>
+    <text x="20" y="165" font-size="13" font-style="italic" fill="#666">
+      Riesgo crítico - Tolerancia CERO
+    </text>
+  </g>
+  
+  <!-- Tarjeta 2: Funcionalidad -->
+  <g transform="translate(470, 120)">
+    <rect x="0" y="0" width="380" height="180" fill="#fff" stroke="#f59e0b" stroke-width="4" rx="8"/>
+    <rect x="0" y="0" width="380" height="50" fill="#f59e0b" rx="8"/>
+    <rect x="0" y="50" width="380" height="8" fill="#f59e0b"/>
+    
+    <text x="190" y="33" font-size="18" font-weight="bold" text-anchor="middle" fill="#fff">
+      FUNCIONALIDAD
+    </text>
+    
+    <text x="20" y="85" font-size="16" font-weight="bold" fill="#f59e0b">
+      Apetito: MEDIO
+    </text>
+    
+    <text x="20" y="115" font-size="14" fill="#333">
+      • Tiempo de respuesta &lt; 5 segundos
+    </text>
+    <text x="20" y="138" font-size="14" fill="#333">
+      • Desviaciones menores aceptables
+    </text>
+    <text x="20" y="165" font-size="13" font-style="italic" fill="#666">
+      Si no afectan la venta del producto
+    </text>
+  </g>
+  
+  <!-- Tarjeta 3: Cronograma -->
+  <g transform="translate(50, 340)">
+    <rect x="0" y="0" width="380" height="180" fill="#fff" stroke="#dc2626" stroke-width="4" rx="8"/>
+    <rect x="0" y="0" width="380" height="50" fill="#dc2626" rx="8"/>
+    <rect x="0" y="50" width="380" height="8" fill="#dc2626"/>
+    
+    <text x="190" y="33" font-size="18" font-weight="bold" text-anchor="middle" fill="#fff">
+      CRONOGRAMA
+    </text>
+    
+    <text x="20" y="85" font-size="16" font-weight="bold" fill="#dc2626">
+      Apetito: BAJO
+    </text>
+    
+    <text x="20" y="115" font-size="14" fill="#333">
+      • Plazo: 6 meses
+    </text>
+    <text x="20" y="138" font-size="14" fill="#333">
+      • Debe estar listo para inicio del
+    </text>
+    <text x="20" y="161" font-size="14" fill="#333">
+      semestre académico
+    </text>
+  </g>
+  
+  <!-- Tarjeta 4: Presupuesto -->
+  <g transform="translate(470, 340)">
+    <rect x="0" y="0" width="380" height="180" fill="#fff" stroke="#f59e0b" stroke-width="4" rx="8"/>
+    <rect x="0" y="0" width="380" height="50" fill="#f59e0b" rx="8"/>
+    <rect x="0" y="50" width="380" height="8" fill="#f59e0b"/>
+    
+    <text x="190" y="33" font-size="18" font-weight="bold" text-anchor="middle" fill="#fff">
+      PRESUPUESTO
+    </text>
+    
+    <text x="20" y="85" font-size="16" font-weight="bold" fill="#f59e0b">
+      Apetito: MEDIO
+    </text>
+    
+    <text x="20" y="115" font-size="14" fill="#333">
+      • Monto: S/ 45,000
+    </text>
+    <text x="20" y="138" font-size="14" fill="#333">
+      • Uso de reservas permitido
+    </text>
+    <text x="20" y="165" font-size="13" font-style="italic" fill="#666">
+      No exceder el techo presupuestal
+    </text>
+  </g>
+  
+  <!-- Nota al pie -->
+  <text x="450" y="570" font-size="12" text-anchor="middle" fill="#666" font-style="italic">
+    Los umbrales definen la tolerancia del proyecto según objetivos estratégicos y restricciones
+  </text>
+</svg>
