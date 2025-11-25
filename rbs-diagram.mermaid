@@ -1,0 +1,89 @@
+graph TB
+    A[Estructura de Desglose de<br/>Riesgos por Categoría<br/>RBS]
+    
+    A --> B[1. Técnicos]
+    A --> C[2. Alcance]
+    A --> D[3. Gestión]
+    A --> E[4. Cronograma]
+    A --> F[5. Calidad]
+    A --> G[6. Presupuesto]
+    
+    B --> B1[1.1 Integración de Sistemas]
+    B1 --> B11[1.1.1 Retrasos integración Yape/Plin]
+    B1 --> B12[1.1.2 Fallas interfaz hardware]
+    
+    B --> B2[1.2 Software Embebido]
+    B2 --> B21[1.2.1 Defectos críticos firmware]
+    
+    B --> B3[1.3 Infraestructura y Redes]
+    B3 --> B31[1.3.1 Problemas conectividad WiFi]
+    
+    B --> B4[1.4 Seguridad]
+    B4 --> B41[1.4.1 Vulnerabilidades seguridad]
+    B4 --> B42[1.4.2 Incumplimiento normativas cifrado]
+    B4 --> B43[1.4.3 Caída servidor central]
+    
+    C --> C1[2.1 Definición de Requisitos]
+    C1 --> C11[2.1.1 Requisitos mal interpretados]
+    
+    C --> C2[2.2 Gestión de Cambios]
+    C2 --> C21[2.2.1 Scope creep no controlado]
+    C2 --> C22[2.2.2 Cambio estrategia tecnológica]
+    
+    C --> C3[2.3 Criterios de Aceptación]
+    C3 --> C31[2.3.1 Falta aprobación alcance]
+    
+    D --> D1[3.1 Interesados Clave]
+    D1 --> D11[3.1.1 Baja tasa adopción usuarios]
+    D1 --> D12[3.1.2 Falta cooperación concesionario]
+    D1 --> D13[3.1.3 Resistencia al cambio]
+    
+    D --> D2[3.2 Recursos Humanos]
+    D2 --> D21[3.2.1 Rotación personal clave]
+    D2 --> D22[3.2.2 Escasez recursos dedicación parcial]
+    
+    D --> D3[3.3 Entorno Organizacional]
+    D3 --> D31[3.3.1 Mal ambiente laboral]
+    D3 --> D32[3.3.2 Incumplimiento normativo]
+    
+    E --> E1[4.1 Estimación]
+    E1 --> E11[4.1.1 Subestimación duración actividades]
+    
+    E --> E2[4.2 Secuencia y Dependencias]
+    E2 --> E21[4.2.1 Retrasos ruta crítica]
+    
+    E --> E3[4.3 Logística]
+    E3 --> E31[4.3.1 Demoras instalación masiva]
+    E3 --> E32[4.3.2 Problemas cadena suministro]
+    
+    F --> F1[5.1 Rendimiento del Sistema]
+    F1 --> F11[5.1.1 Incumplimiento tiempo respuesta]
+    F1 --> F12[5.1.2 Falla tasa éxito transacciones]
+    
+    F --> F2[5.2 Aceptación Usuario UX]
+    F2 --> F21[5.2.1 Fallos usabilidad]
+    
+    F --> F3[5.3 Pruebas y Validación]
+    F3 --> F31[5.3.1 Incumplimiento objetivos rendimiento]
+    
+    F --> F4[5.4 Documentación]
+    F4 --> F41[5.4.1 Documentación técnica insuficiente]
+    
+    G --> G1[6.1 Variación de Costos]
+    G1 --> G11[6.1.1 Incremento por inflación/dólar]
+    G1 --> G12[6.1.2 Sobreestimación costos]
+    
+    G --> G2[6.2 Financiamiento]
+    G2 --> G21[6.2.1 Desfase o recorte presupuestario]
+    
+    G --> G3[6.3 Gestión de Reservas]
+    G3 --> G31[6.3.1 Uso total reserva contingencia]
+    G3 --> G32[6.3.2 Costos acciones correctivas]
+    
+    style A fill:#e1f5ff,stroke:#0066cc,stroke-width:3px
+    style B fill:#ffe6e6,stroke:#cc0000
+    style C fill:#fff4e6,stroke:#cc6600
+    style D fill:#e6f7ff,stroke:#0066cc
+    style E fill:#f0e6ff,stroke:#6600cc
+    style F fill:#e6ffe6,stroke:#00cc00
+    style G fill:#ffe6f7,stroke:#cc0066
